@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Continue Session</title>
+    </head>
+    <body>
+        <h1>Continue Session</h1>
+
+        <button id="continueSessionBtn">Continue Session</button>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            document
+                .getElementById("continueSessionBtn")
+                .addEventListener("click", function () {
+                    axios
+                        .post("/continue-session")
+                        .then(function (response) {
+                            alert(response.data.message);
+                            // Close previous session's browser window/tab using JavaScript
+                            window.close();
+                        })
+                        .catch(function (error) {
+                            alert(
+                                "Failed to continue session: " +
+                                    error.response.data.message
+                            );
+                        });
+                });
+        </script>
+    </body>
+</html>

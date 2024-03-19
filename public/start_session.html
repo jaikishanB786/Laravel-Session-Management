@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Continue Session</title>
+    </head>
+    <body>
+        <h1>Continue Session</h1>
+
+        <!-- Button to start a new session -->
+        <button id="startSessionBtn">Start New Session</button>
+
+        <!-- Button to close the previous session -->
+        <button id="closeSessionBtn" style="display: none">
+            Close Previous Session
+        </button>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            document
+                .getElementById("startSessionBtn")
+                .addEventListener("click", function () {
+                    // Send a POST request to the Laravel backend to start a new session
+                    axios
+                        .post("/start-session")
+                        .then(function (response) {
+                            // Display a success message
+                            alert(response.data.message);
+
+                            // Show the button to close the previous session
+                            document.getElementById(
+                                "closeSessionBtn"
+                            ).style.display = "inline";
+                        })
+                        .catch(function (error) {
+                            // Display an error message if the request fails
+                            alert(
+                                "Failed to start session: " +
+                                    error.response.data.message
+                            );
+                        });
+                });
+
+            document
+                .getElementById("closeSessionBtn")
+                .addEventListener("click", function () {
+                    // Send a POST request to the Laravel backend to close the previous session
+                    axios
+                        .post("/close-session")
+                        .then(function (response) {
+                            // Display a success message
+                            alert(response.data.message);
+
+                            // Close the browser window/tab
+                            window.close();
+                        })
+                        .catch(function (error) {
+                            // Display an error message if the request fails
+                            alert(
+                                "Failed to close session: " +
+                                    error.response.data.message
+                            );
+                        });
+                });
+        </script>
+    </body>
+</html>
